@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Inventario de CPCOriente" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Prueba técnica CPCOriente</title>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="#">CPCOriente</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" Inventario.html">Inventario</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="pruebaTitle mb-3">Prueba técnica CPC</h1>
+        <h6 class="text-muted mb-4">Yeison Eliecer Prada Reatiga</h6>
+
+        <!-- Sección de bienvenida -->
+        <div class="jumbotron py-4">
+            <h2 class="display-5">¡Bienvenido!</h2>
+            <p class="lead">Esta es una prueba técnica para la gestión de inventario de productos de CPC Oriente.</p>
+            <hr class="my-4">
+            <p>Explora las funcionalidades del sistema y gestiona tus productos de manera eficiente.</p>
+            <a href=" Inventario.html" class="btn btn-info btn-lg mt-2">
+                <i class="fas fa-boxes"></i> Ir a Inventario
+            </a>
+            <button type="button" class="btn btn-primary btn-lg mt-2 ml-2" data-toggle="modal" data-target="#midialogo">
+                <i class="fas fa-info-circle"></i> Acerca de esta página
+            </button>
+        </div>
+
+
+
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-cubes fa-3x mb-3 text-primary"></i>
+                        <h5 class="card-title">Gestión de Productos</h5>
+                        <p class="card-text">Agrega, edita y elimina productos fácilmente desde el inventario.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-graduate fa-3x mb-3 text-warning"></i>
+                        <h5 class="card-title">Desarrollador</h5>
+                        <p class="card-text">Proyecto realizado por Yeison Eliecer Prada Reatiga, UTS, usando Node.js,
+                            Express,Bootstrap e inteligencia artificial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="midialogo" tabindex="-1" aria-labelledby="midialogoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="midialogoLabel">Información</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Esta página fue desarrollada por Yeison Eliecer Prada Reatiga de las UTS.</p>
+                        <p>Las tecnologías usadas fueron Node.js con Express, siendo la primera vez usada. Realmente mi
+                            conocimiento de este lenguaje es nuevo para mí pero no exento de aprenderse. El contenido
+                            visto
+                            en esta página (backend) fue desarrollado con el manejo de inteligencia artificial GitHub
+                            Copilot y ChatGPT. Digo esto para que se tenga en cuenta y ser honesto.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-dark text-light text-center py-3 mt-4">
+        <div>
+            © 2025 Yeison Eliecer Prada Reatiga </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

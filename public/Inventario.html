@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Inventario de CPCOriente" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Inventario de CPCOriente</title>
+</head>
+
+<body class="bg-light">
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg mb-4">
+        <a class="navbar-brand" href="index.html">CPCOriente</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inventario</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <header class="mb-4">
+            <h1 class="pruebaTitle mb-2">Inventario de Productos</h1>
+            <h6 class="text-muted">Gestión eficiente y sencilla</h6>
+        </header>
+
+        <!-- Tabla -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-right mb-4">
+            <button id="btn-open-create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Agregar producto
+            </button>
+        </div>
+
+        <dialog id="product-modal">
+            <form id="product-form" method="dialog" class="p-4">
+                <div class="modal-title mb-3" id="modal-title">Nuevo producto</div>
+                <input type="hidden" id="prod-id" />
+
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" class="form-control" placeholder="Ej: Manzanas" required />
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input id="precio" type="number" step="0.01" class="form-control" placeholder="0.00" required />
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input id="stock" type="number" class="form-control" placeholder="0" required />
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" id="btn-cancel" class="btn btn-secondary mr-2">Cancelar</button>
+                    <button id="btn-save" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </dialog>
+
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card border-primary shadow-sm h-100 resumen-card">
+
+                    <div class="card-body text-center">
+                        <i class="fas fa-boxes fa-2x text-primary mb-2"></i>
+                        <h6 class="card-title mt-2">Total de Productos</h6>
+                        <div id="totalProductos" class="display-4 font-weight-bold">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-primary shadow-sm h-100 resumen-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-layer-group fa-2x text-success mb-2"></i>
+                        <h6 class="card-title mt-2">Stock Total</h6>
+                        <div id="stockTotal" class="display-4 font-weight-bold">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-primary shadow-sm h-100 resumen-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-dollar-sign fa-2x text-warning mb-2"></i>
+                        <h6 class="card-title mt-2">Valor Inventario</h6>
+                        <div id="valorInventario" class="display-4 font-weight-bold">$0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <footer class="bg-dark text-light text-center py-3 mt-4">
+        <div>
+            © 2024 Yeison Eliecer Prada Reatiga
+        </div>
+    </footer>
+
+    <script>
+        const API = "/productos";
+        const tbody = document.getElementById("tbody");
+        const modal = document.getElementById("product-modal");
+        const form = document.getElementById("product-form");
+        const modalTitle = document.getElementById("modal-title");
+        const btnOpenCreate = document.getElementById("btn-open-create");
+        const btnCancel = document.getElementById("btn-cancel");
+
+        const inputId = document.getElementById("prod-id");
+        const inputNombre = document.getElementById("nombre");
+        const inputPrecio = document.getElementById("precio");
+        const inputStock = document.getElementById("stock");
+
+        const totalProductos = document.getElementById("totalProductos");
+        const stockTotal = document.getElementById("stockTotal");
+        const valorInventario = document.getElementById("valorInventario");
+
+        async function loadProductos() {
+            const res = await fetch(API);
+            const data = await res.json();
+            renderTable(data);
+            renderResumen(data);
+        }
+
+        function renderTable(data) {
+            tbody.innerHTML = "";
+            data.forEach(p => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+          <td>${p.id}</td>
+          <td>${p.nombre}</td>
+          <td>$ ${Number(p.precio).toFixed(2)}</td>
+          <td>${p.stock}</td>
+          <td>
+            <button data-action="edit" data-id="${p.id}" class="btn btn-sm btn-warning mr-2">
+                <i class="fas fa-edit"></i> Editar
+            </button>
+            <button data-action="del" data-id="${p.id}" class="btn btn-sm btn-danger">
+                <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
+        `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderResumen(data) {
+            totalProductos.textContent = data.length;
+            let stock = 0;
+            let valor = 0;
+            data.forEach(p => {
+                stock += Number(p.stock);
+                valor += Number(p.stock) * Number(p.precio);
+            });
+            stockTotal.textContent = stock;
+            valorInventario.textContent = "$" + valor.toLocaleString("es-CO", { minimumFractionDigits: 2 });
+        }
+
+        btnOpenCreate.addEventListener("click", () => {
+            inputId.value = "";
+            inputNombre.value = "";
+            inputPrecio.value = "";
+            inputStock.value = "";
+            modalTitle.textContent = "Nuevo producto";
+            modal.showModal();
+        });
+
+        btnCancel.addEventListener("click", () => modal.close());
+
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const payload = {
+                nombre: inputNombre.value.trim(),
+                precio: inputPrecio.value,
+                stock: inputStock.value
+            };
+
+            try {
+                if (inputId.value) {
+
+                    const res = await fetch(`${API}/${inputId.value}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) throw await res.json();
+                } else {
+                    // Crear
+                    const res = await fetch(API, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) throw await res.json();
+                }
+                modal.close();
+                await loadProductos();
+            } catch (err) {
+                alert("Error: " + (err.error || "Revisa los datos"));
+            }
+        });
+
+        // Delegación de eventos para editar/eliminar
+        tbody.addEventListener("click", async (e) => {
+            const btn = e.target.closest("button");
+            if (!btn) return;
+            const id = btn.dataset.id;
+
+            if (btn.dataset.action === "edit") {
+                // Obtener datos y abrir modal
+                const res = await fetch(`${API}/${id}`);
+                if (!res.ok) return alert("No se pudo cargar el producto");
+                const p = await res.json();
+                inputId.value = p.id;
+                inputNombre.value = p.nombre;
+                inputPrecio.value = p.precio;
+                inputStock.value = p.stock;
+                modalTitle.textContent = `Editar producto #${p.id}`;
+                modal.showModal();
+            }
+
+            if (btn.dataset.action === "del") {
+                if (!confirm("¿Eliminar este producto?")) return;
+                const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+                if (res.status === 204) {
+                    await loadProductos();
+                } else {
+                    const err = await res.json();
+                    alert("Error: " + (err.error || "No se pudo eliminar"));
+                }
+            }
+        });
+
+
+        loadProductos();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

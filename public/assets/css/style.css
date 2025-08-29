@@ -1,0 +1,129 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  text-align: center;
+}
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+nav {
+  background: linear-gradient(to right, #000000, #0657fb);
+
+  background-color: #090909;
+  color: #fff;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: inline-block;
+}
+
+.pruebaTitle {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #000000, #0657fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.container {
+  margin: 20px auto;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+dialog#product-modal {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  max-width: 400px;
+  width: 90%;
+  padding: 0;
+  background: #fff;
+  animation: fadeInDialog 0.2s;
+  z-index: 1050;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@keyframes fadeInDialog {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+dialog#product-modal::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+#product-form .form-group label {
+  font-weight: 500;
+}
+#product-form .form-control {
+  margin-bottom: 12px;
+}
+#product-form .modal-title,
+#modal-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #0657fb;
+}
+#product-form .d-flex {
+  gap: 8px;
+}
+.resumen-card {
+  padding: 0.75rem 0.5rem;
+  min-height: 120px;
+  max-width: 220px;
+  margin: 0 auto;
+}
+.resumen-card .card-body {
+  padding: 0.75rem 0.5rem;
+}
+.resumen-card .display-4 {
+  font-size: 2rem;
+}
+.resumen-card i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 767px) {
+  .resumen-card {
+    max-width: 100%;
+    min-height: 100px;
+  }
+  .resumen-card .display-4 {
+    font-size: 1.4rem;
+  }
+}
+footer {
+  background: linear-gradient(to right, #000000, #052057);
+
+  padding: 10px 0;
+  margin-top: 20px;
+}
+footer a {
+  color: #fff;
+  text-decoration: none;
+}
